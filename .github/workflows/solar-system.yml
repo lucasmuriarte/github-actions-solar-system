@@ -57,8 +57,9 @@ jobs:
           run: npm run coverage
           
         - name: Archive Test Result
+          if: always()
           uses: actions/upload-artifact@v4
           with:
-            name: Mocha-Test-Result
+            name: Code-Coverage-Result
             path: coverage
             retention-delay: 5
