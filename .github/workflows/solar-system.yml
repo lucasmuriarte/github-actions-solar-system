@@ -62,4 +62,4 @@ jobs:
           with:
             name: Code-Coverage-Result
             path: coverage
-            retention-delay: 5
+            retention-days: 5
