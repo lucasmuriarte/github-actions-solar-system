@@ -54,7 +54,7 @@ jobs:
     
         - name: Unit Testing
           continue-on-error: true
-          run: npm run code-coverage
+          run: npm run coverage
           
         - name: Archive Test Result
           if: always()
