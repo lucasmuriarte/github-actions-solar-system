@@ -113,3 +113,22 @@ jobs:
       
       - name: k8s version
         run: kubectl version -o yaml
+      
+      - name: fetch ingress ip
+        id: dev-deploy
+        run: |
+         echo "INGRESS_IP=$(kubectl get ing -n developmentingress-nginx get services ingress-nginx-controller -ojsonpath='{.status.loadBalancer.ingress[0].ip}')" >> $GITHUB_ENV 
+
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '_{_'
+          tokenSuffix: '_}_'
+          files: '["kubernetes/development/*.yaml"]'
+        env:
+          NAMESPACE: '${{ vars.NAMESPACE }}'
+          REPLICAS: '${{ vars.REPLICAS }}'
+          IMAGE: >-
+            ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha
+            }}
+          INGRESS_IP: '${{ env.INGRESS_IP }}'
+      - run: cat kubernetes/development/*.yaml
