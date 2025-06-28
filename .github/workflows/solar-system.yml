@@ -117,7 +117,7 @@ jobs:
       - name: fetch ingress ip
         id: dev-deploy
         run: |
-         echo "INGRESS_IP=$(kubectl get ing -n developmentingress-nginx get services ingress-nginx-controller -ojsonpath='{.status.loadBalancer.ingress[0].ip}')" >> $GITHUB_ENV 
+         echo "INGRESS_IP=$(kubectl get ing -n developmentingress-nginx get services ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')" >> $GITHUB_ENV 
 
       - uses: cschleiden/replace-tokens@v1
         with:
