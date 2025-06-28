@@ -99,14 +99,14 @@ jobs:
       steps:  
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: install kubectl
         uses: azure/setup-kubectl@v4
         with:
           version: v1.28.1
         
       - name: k8s context
-        uses: azure/k8s-set-context
+        uses: azure/k8s-set-context@v4
         with:
           method: kubeconfig
           kubeconfig: '${{ secrets.KUBECONFIG }}'
