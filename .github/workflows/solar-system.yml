@@ -90,3 +90,24 @@ jobs:
             context: .
             push: true
             tags: 'ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.sha }}'
+    
+    dev-deploy:
+      runs-on: ubuntu-latest
+      needs:
+      - docker
+      environment: 
+        name: development
+      steps:
+      - name: install kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: v1.28.1
+        
+      - name: k8s context
+        uses: azure/k8s-set-context
+        with:
+          method: kubeconfig
+          kubeconfig: '${{ secrets.KUBECONFIG }}'
+      
+      - name: k8s version
+        run: kubectl version -o yaml
