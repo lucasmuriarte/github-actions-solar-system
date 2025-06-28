@@ -112,7 +112,7 @@ jobs:
           kubeconfig: '${{ secrets.KUBECONFIG }}'
       
       - name: k8s version
-        run: kubectl version -o yaml
+        run: kubectl config current-context
       
       - name: fetch ingress ip
         id: dev-deploy
