@@ -9,7 +9,7 @@ on:
 
 jobs:
   verify-service-container:
-    runs-on: solar-system-test   # or your self‑hosted label
+    runs-on: solar-system-test-k8s   # or your self‑hosted label
 
     # 🔸 Start a service container (httpbin) alongside the job
     services:
