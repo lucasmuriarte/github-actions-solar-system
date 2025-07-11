@@ -3,7 +3,9 @@ name: Service‑container smoke test
 on:
   workflow_dispatch:        # run manually
   push:
-    branches: [ main ]
+    branches: 
+    - main
+    - 'feature/*'
 
 jobs:
   verify-service-container:
