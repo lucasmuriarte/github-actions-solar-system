@@ -1,0 +1,38 @@
+name: Service‑container smoke test
+
+on:
+  workflow_dispatch:        # run manually
+  push:
+    branches: 
+    - main
+    - 'feature/*'
+
+jobs:
+  verify-service-container:
+    runs-on: solar-system-test   # or your self‑hosted label
+
+    # 🔸 Start a service container (httpbin) alongside the job
+    services:
+      httpbin:
+        image: kennethreitz/httpbin      # tiny image that includes /status/200
+        ports:
+          - 8080:80                     # map job‑internal 8080 → container 80
+        options: >-
+          --health-cmd "curl -fs http://localhost:80/status/200 || exit 1"
+          --health-interval 5s
+          --health-retries 15
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install deps
+        run: pip install --quiet requests pytest
+
+      - name: Run connectivity test
+        run: pytest -q test_service.py
